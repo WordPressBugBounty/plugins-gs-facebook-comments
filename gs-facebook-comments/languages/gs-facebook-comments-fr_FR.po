@@ -1,0 +1,335 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-28 21:29-0600\n"
+"PO-Revision-Date: 2021-09-28 21:30-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: admin/class-wpfc-admin.php:146
+msgid "WP Facebook Comments Settings!"
+msgstr "Paramètres de WP Facebook de commentaires !"
+
+#: admin/class-wpfc-admin.php:167
+#, fuzzy
+msgid "Facebook App ID"
+msgstr "Votre identifiant d'application:"
+
+#: admin/class-wpfc-admin.php:176
+msgid "Show comments before SSL?"
+msgstr "Afficher les commentaires avant SSL?"
+
+#: admin/class-wpfc-admin.php:185
+#, fuzzy
+msgid "Number of comments to show!"
+msgstr "Afficher / Comme Partager boutons?"
+
+#: admin/class-wpfc-admin.php:193
+#, fuzzy
+msgid "Width of the comments box!"
+msgstr "Adapt to plugin container width"
+
+#: admin/class-wpfc-admin.php:201
+#, fuzzy
+msgid "Color scheme!"
+msgstr "Couleur de l’URL"
+
+#: admin/class-wpfc-admin.php:209
+msgid "Background color!"
+msgstr "Couleur d’arrière-plan"
+
+#: admin/class-wpfc-admin.php:217
+msgid "Order by!"
+msgstr "Commande par"
+
+#: admin/class-wpfc-admin.php:225
+msgid "Language"
+msgstr "Language"
+
+#: admin/class-wpfc-admin.php:233
+msgid "Select post types to show Facebook comments!"
+msgstr ""
+"Sélectionnez les types de poste pour afficher les commentaires de Facebook !"
+
+#: admin/class-wpfc-admin.php:254
+msgid "If you want to moderate the comments, we recommend you specify a "
+msgstr ""
+"Si vous souhaitez modérer les commentaires, nous vous recommandons de "
+"spécifier un"
+
+#: admin/class-wpfc-admin.php:256
+msgid " ID. Please check our video tutorial about "
+msgstr "ID. veuillez consulter notre tutoriel vidéo sur"
+
+#: admin/class-wpfc-admin.php:257
+#, fuzzy
+msgid "How to create Facebook App v2.11"
+msgstr "Comment créer des application Facebook v2.8 pour WooSocio"
+
+#: admin/class-wpfc-admin.php:261
+msgid "Click here for App Moderation Tools!"
+msgstr "Cliquez ici pour les outils de modération d'application!"
+
+#: admin/class-wpfc-admin.php:285
+msgid "Select if you want to show comments before SSL."
+msgstr "Sélectionnez si vous voulez afficher les commentaires avant SSL."
+
+#: admin/class-wpfc-admin.php:302
+msgid "The number of comments to show. The minimum value is 1"
+msgstr "Le nombre de commentaires à afficher. La valeur minimale est 1"
+
+#: admin/class-wpfc-admin.php:319
+msgid "Leave blank for full width."
+msgstr "Laissez vide pour toute la largeur."
+
+#: admin/class-wpfc-admin.php:337
+#, fuzzy
+msgid "Light"
+msgstr "Lumière"
+
+#: admin/class-wpfc-admin.php:341
+#, fuzzy
+msgid "Dark"
+msgstr "Sombre"
+
+#: admin/class-wpfc-admin.php:364
+msgid "Select color!"
+msgstr "Sélectionner la couleur"
+
+#: admin/class-wpfc-admin.php:366
+msgid "Background color used by the comments box."
+msgstr "Couleur d’arrière-plan utilisée par la zone commentaires."
+
+#: admin/class-wpfc-admin.php:383
+msgid "Top"
+msgstr "Haut"
+
+#: admin/class-wpfc-admin.php:384
+msgid "Highest quality comments."
+msgstr "Commentaires de qualité plus élevés."
+
+#: admin/class-wpfc-admin.php:387
+#, fuzzy
+msgid "Time"
+msgstr "Publier sur Facebook chaque fois sur la mise à jour de produit ?"
+
+#: admin/class-wpfc-admin.php:388
+msgid "Oldest comments at the top."
+msgstr "Commentaires plus anciens en haut."
+
+#: admin/class-wpfc-admin.php:391
+msgid "Reverse Time"
+msgstr "enchères inversées"
+
+#: admin/class-wpfc-admin.php:392
+msgid "Newest comments at the top."
+msgstr "Commentaires plus récents en haut."
+
+#: admin/class-wpfc-admin.php:416
+#, fuzzy
+msgid "Select language."
+msgstr "Sélectionnez les types de poste à Tweet !"
+
+#: admin/class-wpfc-admin.php:460
+#, fuzzy
+msgid "Facebook Comments Moderation?"
+msgstr "WooSocio - Facebook Like Box"
+
+#: admin/class-wpfc-admin.php:472
+#, fuzzy
+msgid "Post Types for Comments!"
+msgstr "Sélectionnez les types de poste à Tweet !"
+
+#: admin/class-wpfc-admin.php:475
+#, fuzzy
+msgid "Please use shortcode "
+msgstr "Utiliser une petite En-tête"
+
+#: admin/class-wpfc-admin.php:477
+#, fuzzy
+msgid " for pages and manual comments!"
+msgstr "* Vrac publie sur les pages, groupes"
+
+#: admin/class-wpfc-admin.php:489
+#, fuzzy
+msgid "Comments Box!"
+msgstr "Boîte j’aime de Facebook"
+
+#: admin/class-wpfc-admin.php:505
+msgid "WP Facebook Comments"
+msgstr ""
+
+#: admin/class-wpfc-admin.php:529
+msgid "Allow Comments?"
+msgstr "Autoriser les commentaires"
+
+#: admin/class-wpfc-admin.php:531
+msgid "Save"
+msgstr "sauver"
+
+#: admin/partials/wpfc-admin-plugins.php:1
+#, fuzzy
+msgid "You may also like!"
+msgstr "Noticias relacionadas"
+
+#: admin/partials/wpfc-admin-plugins.php:12
+msgid "* Disable WP Comments *"
+msgstr "* Désactiver les commentaires WP *"
+
+#: admin/partials/wpfc-admin-plugins.php:13
+msgid "* Show, Hide or Close WordPress native comments."
+msgstr "* Afficher, masquer ou fermer les commentaires natifs WordPress."
+
+#: admin/partials/wpfc-admin-plugins.php:14
+msgid "* Show/ Hide WP Comments menu from admin bar."
+msgstr ""
+"* Afficher / Masquer le menu Commentaires WP à partir de la barre "
+"d’administration."
+
+#: admin/partials/wpfc-admin-plugins.php:15
+msgid "* Show/ Hide WP Comments main menu."
+msgstr "* Afficher / Masquer les commentaires WP menu principal."
+
+#: admin/partials/wpfc-admin-plugins.php:16
+msgid "* Select post types to hide WP Comments."
+msgstr ""
+"* Sélectionnez les types de publication pour masquer les commentaires WP."
+
+#: admin/partials/wpfc-admin-plugins.php:17
+#: admin/partials/wpfc-admin-plugins.php:39
+#: admin/partials/wpfc-admin-plugins.php:81
+#, fuzzy
+msgid "* And many more..."
+msgstr "et beaucoup d'autres..."
+
+#: admin/partials/wpfc-admin-plugins.php:33
+#, fuzzy
+msgid "* WooSocio Free version *"
+msgstr "* Version Pro WooSocio *"
+
+#: admin/partials/wpfc-admin-plugins.php:34
+#, fuzzy
+msgid "* Post product to Facebook, pages and groups"
+msgstr "* poster sur plusieurs pages ou groupes à la fois"
+
+#: admin/partials/wpfc-admin-plugins.php:35
+msgid "* post to groups you dont manage."
+msgstr "* publier sur des groupes que vous ne gérez pas."
+
+#: admin/partials/wpfc-admin-plugins.php:36
+#, fuzzy
+msgid "* Add widget for Facebook like box"
+msgstr "Un Widget de WooSocio d’afficher comme boîte de Facebook !"
+
+#: admin/partials/wpfc-admin-plugins.php:37
+#, fuzzy
+msgid "* Multi user ready"
+msgstr "* Multi utilisateur prêt"
+
+#: admin/partials/wpfc-admin-plugins.php:38
+#, fuzzy
+msgid "* Post as image or link"
+msgstr "Lien"
+
+#: admin/partials/wpfc-admin-plugins.php:55
+#, fuzzy
+msgid "* WooTweet Free *"
+msgstr "* WooTweet gratuit *"
+
+#: admin/partials/wpfc-admin-plugins.php:57
+#, fuzzy
+msgid "* Post product to Twitter"
+msgstr "* Produit poste à Twitter"
+
+#: admin/partials/wpfc-admin-plugins.php:58
+#, fuzzy
+msgid "* Post products multiple times(on every update)      "
+msgstr "* Post produits plusieurs fois (à chaque mise à jour)"
+
+#: admin/partials/wpfc-admin-plugins.php:59
+msgid "* Add Tweet Widget for latest Tweets"
+msgstr "* Ajouter Tweet Widget pour les derniers Tweets"
+
+#: admin/partials/wpfc-admin-plugins.php:60
+#, fuzzy
+msgid "* And many more to come..."
+msgstr "* Et bien d'autres à venir ..."
+
+#: admin/partials/wpfc-admin-plugins.php:76
+#, fuzzy
+msgid "* WP Instagram Post *"
+msgstr "* WP Instagram Post *"
+
+#: admin/partials/wpfc-admin-plugins.php:77
+#, fuzzy
+msgid "* Post any type of post to Instagram."
+msgstr "* Publier n’importe quel type de poste sur Instagram."
+
+#: admin/partials/wpfc-admin-plugins.php:78
+#, fuzzy
+msgid "* Post product price, currency symbol, link, details."
+msgstr ""
+"* Afficher les détails, lien, symbole monétaire, des prix des produits."
+
+#: admin/partials/wpfc-admin-plugins.php:79
+#, fuzzy
+msgid "* Post products multiple times. (on every update)"
+msgstr "* Post produits plusieurs fois (à chaque mise à jour)"
+
+#: admin/partials/wpfc-admin-plugins.php:80
+#, fuzzy
+msgid "* Simple to use with Instagram user and password."
+msgstr "* Simple à utiliser avec Instagram utilisateur et de mot de passe."
+
+#: admin/partials/wpfc-admin-right-area.php:39
+msgid "Liked WP Social Comments?"
+msgstr "Vous avez aimé WP Social Comments?"
+
+#: admin/partials/wpfc-admin-right-area.php:48
+#, fuzzy
+msgid "Need more help? Please contact: "
+msgstr "Besoin d'aide? S'il vous plaît contacter:"
+
+#: admin/partials/wpfc-admin-right-area.php:51
+#, fuzzy
+msgid "Contact Us"
+msgstr "Contactez nous"
+
+#: public/class-wpfc-public.php:160 public/class-wpfc-public.php:239
+msgid "Facebook Notice for EU!"
+msgstr "Avis Facebook pour l’UE!"
+
+#: public/class-wpfc-public.php:161 public/class-wpfc-public.php:240
+msgid "You need to login to view and post FB Comments!"
+msgstr ""
+"Vous devez vous connecter pour afficher et publier des commentaires FB!"
+
+#~ msgid "Liked WP Facebook Comments?"
+#~ msgstr "J’ai aimé les commentaires WP Facebook ?"
+
+#~ msgid "WP Facebook Comments Options"
+#~ msgstr "Options de commentaires WP Facebook"
+
+#, fuzzy
+#~ msgid "Important Notice:"
+#~ msgstr "Avis important:"
+
+#, fuzzy
+#~ msgid ""
+#~ "You are using Internet Explorer. This plugin may not work properly with "
+#~ "IE. Please use any other browser."
+#~ msgstr ""
+#~ "Vous utilisez Internet Explorer. Ce plugin ne fonctionne pas correctement "
+#~ "avec IE. S'il vous plaît utiliser un autre navigateur."
+
+#, fuzzy
+#~ msgid "Recommended: Google Chrome."
+#~ msgstr "Recommandé: Google Chrome."
