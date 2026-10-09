@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired when the plugin is uninstalled.
  *
@@ -22,7 +21,7 @@
  * @link       https://profiles.wordpress.org/qsheeraz#content-plugins
  * @since      1.0.0
  *
- * @package    Wpfc
+ * @package    GenialSouls_Social_Comments
  */
 
 // If uninstall not called from WordPress, then exit.

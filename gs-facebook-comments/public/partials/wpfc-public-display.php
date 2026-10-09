@@ -1,16 +1,10 @@
 <?php
-
 /**
- * Provide a public-facing view for the plugin
+ * Legacy public partial retained for backward compatibility.
  *
- * This file is used to markup the public-facing aspects of the plugin.
- *
- * @link       https://profiles.wordpress.org/qsheeraz#content-plugins
- * @since      1.0.0
- *
- * @package    Wpfc
- * @subpackage Wpfc/public/partials
+ * @package GenialSouls_Social_Comments
  */
-?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}

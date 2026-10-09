@@ -1,1 +1,6 @@
-<?php // Silence is golden
+<?php
+/**
+ * Silence directory browsing.
+ *
+ * @package GenialSouls_Social_Comments
+ */

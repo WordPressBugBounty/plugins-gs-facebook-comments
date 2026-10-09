@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -10,17 +9,19 @@
  *
  * @link              https://profiles.wordpress.org/qsheeraz#content-plugins
  * @since             1.0.0
- * @package           Wpfc
+ * @package           GenialSouls_Social_Comments
  *
  * @wordpress-plugin
- * Plugin Name:       WP Social Comments
+ * Plugin Name:       Genial Social Comments
  * Plugin URI:        https://profiles.wordpress.org/qsheeraz#content-plugins
- * Description:       This plugin lets people comment on content on your site using their Facebook account.
- * Version:           1.7.5
+ * Description:       This plugin adds an external comments provider to selected content on your site.
+ * Version:           1.8.2
+ * Requires at least: 4.7
+ * Requires PHP:      7.4
  * Author:            GenialSouls
  * Author URI:        https://profiles.wordpress.org/qsheeraz#content-plugins
  * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       gs-facebook-comments
  * Domain Path:       /languages
  */
@@ -35,34 +36,34 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WPFC_VERSION', '1.7.5' );
+define( 'GENIALSOULS_SOCIAL_COMMENTS_VERSION', '1.8.2' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-wpfc-activator.php
+ * This action is documented in includes/class-genialsouls-social-comments-activator.php
  */
-function activate_wpfc() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpfc-activator.php';
-	Wpfc_Activator::activate();
+function genialsouls_social_comments_activate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-genialsouls-social-comments-activator.php';
+	GenialSouls_Social_Comments_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wpfc-deactivator.php
+ * This action is documented in includes/class-genialsouls-social-comments-deactivator.php
  */
-function deactivate_wpfc() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wpfc-deactivator.php';
-	Wpfc_Deactivator::deactivate();
+function genialsouls_social_comments_deactivate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-genialsouls-social-comments-deactivator.php';
+	GenialSouls_Social_Comments_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_wpfc' );
-register_deactivation_hook( __FILE__, 'deactivate_wpfc' );
+register_activation_hook( __FILE__, 'genialsouls_social_comments_activate' );
+register_deactivation_hook( __FILE__, 'genialsouls_social_comments_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-wpfc.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-genialsouls-social-comments.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,10 +74,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wpfc.php';
  *
  * @since    1.0.0
  */
-function run_wpfc() {
+function genialsouls_social_comments_run() {
 
-	$plugin = new Wpfc();
+	$plugin = new GenialSouls_Social_Comments();
 	$plugin->run();
-
 }
-run_wpfc();
+genialsouls_social_comments_run();

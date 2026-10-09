@@ -31,3 +31,7 @@
   color: black;
 }
 </style>
+
+.genialsouls-social-comments-disqus { margin: 1.5em 0; }
+.gsc-disqus-load, .gsc-disqus-retry { cursor: pointer; }
+.gsc-disqus-target { margin-top: 1em; }

@@ -1,32 +1,48 @@
-(function( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	$( function () {
+		$( '.gsc-provider-card input[type="radio"]' ).on( 'change', function () {
+			$( '.gsc-provider-card' ).removeClass( 'is-selected' );
+			$( this ).closest( '.gsc-provider-card' ).addClass( 'is-selected' );
+		} );
 
-})( jQuery );
+		const button = $( '#genialsouls-social-comments-save' );
+		if ( ! button.length ) {
+			return;
+		}
+
+		button.on( 'click', function () {
+			const spinner = $( '#genialsouls-social-comments-spinner' );
+			const result = $( '#genialsouls-social-comments-result' );
+
+			spinner.addClass( 'is-active' );
+			result.text( '' );
+
+			$.post(
+				ajaxurl,
+				{
+					action: genialSoulsSocialCommentsAdmin.action,
+					nonce: button.data( 'nonce' ),
+					post_id: button.data( 'post-id' ),
+					enabled: $( '#genialsouls-social-comments-enabled' ).prop( 'checked' ) ? '1' : '0'
+				}
+			).done( function ( response ) {
+				if ( response.success ) {
+					result.text( '✓' );
+					return;
+				}
+
+				const message = response.data && response.data.message ? response.data.message : genialSoulsSocialCommentsAdmin.errorMessage;
+				result.text( message );
+			} ).fail( function ( response ) {
+				const message = response.responseJSON && response.responseJSON.data && response.responseJSON.data.message
+					? response.responseJSON.data.message
+					: genialSoulsSocialCommentsAdmin.errorMessage;
+				result.text( message );
+			} ).always( function () {
+				spinner.removeClass( 'is-active' );
+			} );
+		} );
+	} );
+} )( jQuery );
