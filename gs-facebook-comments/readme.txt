@@ -19,20 +19,18 @@ Adds an external social-comments area to selected post types and through the exi
     </p>
 </blockquote>
 
-Genial Social Comments adds the selected external comments provider after selected
-public post types. Existing installations continue using Facebook / Meta unless
-another provider is selected. The `[gs-fb-comments]` shortcode remains
-available for manual placement.
+Genial Social Comments lets you add Disqus-powered discussions to your WordPress
+website. Configure your Disqus account, choose how comments load, and manage the
+experience through a streamlined settings interface. Privacy-aware loading options
+include click-to-load, viewport-based loading, and immediate loading.
 
-Disqus can load on click, near the viewport, or immediately. Click-to-load is
-the recommended default because it avoids an external request until the visitor
-chooses to load comments. Disqus Basic may display advertising. Advertising,
-tracking, account features, and ad-free options are controlled by Disqus and the
-publisher's Disqus account or plan; Genial Social Comments does not remove or alter
-Disqus advertising.
+Legacy Facebook Comments compatibility: Meta discontinued the Facebook Comments
+Plugin in February 2026. Existing Facebook settings are preserved, but Facebook
+commenting is no longer functional. Use Disqus for active discussions.
 
-A related commercial product is available from
-[GenialSouls](https://genialsouls.com/product/wp-facebook-comments-pro/).
+Disqus Basic may display advertising. Advertising, tracking, account features, and
+ad-free options are controlled by Disqus and the publisher's Disqus account or plan;
+Genial Social Comments does not remove or alter Disqus advertising.
 
 == Installation ==
 
@@ -41,7 +39,7 @@ Here are few steps to follow:
 1. Upload `gs-facebook-comments` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Open the Social Comments settings page in the WordPress dashboard.
-4. Choose Facebook / Meta or Disqus. New installations use Disqus; enter the shortname from your Disqus site settings before loading comments.
+4. Choose Disqus for active comments. New installations use Disqus; enter the shortname from your Disqus site settings before loading comments. Existing legacy installations retain their saved Facebook settings for compatibility.
 5. Select post types or use `[gs-fb-comments]` for manual placement.
 6. That's it. You're ready to go!
 
@@ -54,6 +52,12 @@ Yes. You can use the existing shortcode `[gs-fb-comments]` for pages or other ma
 = Does Disqus require an API key? =
 
 No. Basic Disqus embedding requires a Disqus shortname, not an API key. API credentials and synchronization are not part of this plugin integration.
+
+== Screenshots ==
+
+1. Genial Social Comments settings page with provider selection and configuration.
+
+2. Disqus configuration and privacy-aware loading options.
 
 == External services ==
 
