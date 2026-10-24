@@ -5,7 +5,15 @@
 		$( '.gsc-provider-card input[type="radio"]' ).on( 'change', function () {
 			$( '.gsc-provider-card' ).removeClass( 'is-selected' );
 			$( this ).closest( '.gsc-provider-card' ).addClass( 'is-selected' );
+			updateProviderContext();
 		} );
+
+		function updateProviderContext() {
+			const selected = $( '.gsc-provider-card input[name="wpfc_settings[genialsouls_provider]"]:checked' ).val();
+			$( '[data-provider-context="wordpress"]' ).prop( 'hidden', 'wordpress' !== selected );
+		}
+
+		updateProviderContext();
 
 		const button = $( '#genialsouls-social-comments-save' );
 		if ( ! button.length ) {

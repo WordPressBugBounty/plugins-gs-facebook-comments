@@ -77,7 +77,7 @@ class GenialSouls_Social_Comments {
 		if ( defined( 'GENIALSOULS_SOCIAL_COMMENTS_VERSION' ) ) {
 			$this->version = GENIALSOULS_SOCIAL_COMMENTS_VERSION;
 		} else {
-			$this->version = '1.8.2';
+			$this->version = '1.8.3';
 		}
 		$this->plugin_name = 'genialsouls-social-comments';
 
@@ -110,6 +110,7 @@ class GenialSouls_Social_Comments {
 		 */
 		require_once __DIR__ . '/class-genialsouls-social-comments-loader.php';
 		require_once __DIR__ . '/class-genialsouls-social-comments-provider-resolver.php';
+		require_once __DIR__ . '/class-genialsouls-social-comments-native-appearance.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -120,6 +121,7 @@ class GenialSouls_Social_Comments {
 		require_once __DIR__ . '/class-genialsouls-social-comments-provider-registry.php';
 		require_once __DIR__ . '/providers/class-genialsouls-social-comments-facebook.php';
 		require_once __DIR__ . '/providers/class-genialsouls-social-comments-disqus.php';
+		require_once __DIR__ . '/providers/class-genialsouls-social-comments-wordpress.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing

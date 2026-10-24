@@ -13,7 +13,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p>
 		<strong><?php esc_html_e( 'Support', 'gs-facebook-comments' ); ?></strong><br>
 		<a href="<?php echo esc_url( 'https://genialsouls.com/contact-us/' ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Contact GenialSouls', 'gs-facebook-comments' ); ?></a>
-		&middot;
-		<a href="<?php echo esc_url( 'https://genialsouls.com/product/wp-facebook-comments-pro/' ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Related product information', 'gs-facebook-comments' ); ?></a>
 	</p>
 </div>

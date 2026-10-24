@@ -1,0 +1,14 @@
+/*
+ * Optional appearance for core comments markup only.
+ * Enqueued on singular pages only for the Native provider and a non-default preset.
+ */
+#comments.comments-area .comment-list li.comment,
+.wp-block-comments .wp-block-comment-template li {
+	box-sizing: border-box;
+}
+
+#comments.comments-area a,
+.wp-block-comments a {
+	text-decoration-color: var(--gsc-native-accent, #2271b1);
+	text-underline-offset: 0.15em;
+}

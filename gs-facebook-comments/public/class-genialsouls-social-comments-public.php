@@ -52,10 +52,16 @@ class GenialSouls_Social_Comments_Public {
 		$this->providers   = new GenialSouls_Social_Comments_Provider_Registry();
 		$this->providers->register( new GenialSouls_Social_Comments_Facebook() );
 		$this->providers->register( new GenialSouls_Social_Comments_Disqus() );
+		$this->providers->register( new GenialSouls_Social_Comments_WordPress() );
 	}
 
 	/** Register frontend styles. */
 	public function enqueue_styles() {
+		if ( $this->is_wordpress_native_provider() ) {
+			$this->enqueue_native_appearance_styles();
+			return;
+		}
+
 		wp_enqueue_style(
 			'genialsouls-social-comments',
 			plugin_dir_url( __FILE__ ) . 'css/wpfc-public.css',
@@ -64,8 +70,38 @@ class GenialSouls_Social_Comments_Public {
 		);
 	}
 
+	/** Enqueue narrowly scoped styling only for enabled native appearance presets. */
+	private function enqueue_native_appearance_styles() {
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$options = $this->get_settings();
+		$preset  = GenialSouls_Social_Comments_Native_Appearance::normalize_preset( isset( $options[ GenialSouls_Social_Comments_Native_Appearance::PRESET_OPTION ] ) ? $options[ GenialSouls_Social_Comments_Native_Appearance::PRESET_OPTION ] : 'default' );
+		if ( 'default' === $preset || ( ! comments_open() && 0 === (int) get_comments_number() ) ) {
+			return;
+		}
+
+		$handle = 'genialsouls-social-comments-native-appearance';
+		wp_enqueue_style( $handle, plugin_dir_url( __FILE__ ) . 'css/wpfc-native-comments.css', array(), $this->version );
+
+		$accent = GenialSouls_Social_Comments_Native_Appearance::get_accent_color( isset( $options[ GenialSouls_Social_Comments_Native_Appearance::ACCENT_OPTION ] ) ? $options[ GenialSouls_Social_Comments_Native_Appearance::ACCENT_OPTION ] : 'blue' );
+		$css    = "#comments.comments-area, .wp-block-comments { --gsc-native-accent: {$accent}; }\n";
+		if ( 'modern' === $preset ) {
+			$css .= "#comments.comments-area .comment-list li.comment, .wp-block-comments .wp-block-comment-template li { margin-block: 1rem; padding: 1rem; border: 1px solid #dcdcde; border-inline-start: 3px solid var(--gsc-native-accent); border-radius: 8px; background: #fff; }\n";
+		} elseif ( 'minimal' === $preset ) {
+			$css .= "#comments.comments-area .comment-list li.comment, .wp-block-comments .wp-block-comment-template li { margin-block: 0; padding-block: .8rem; border: 0; border-bottom: 1px solid #dcdcde; border-radius: 0; background: transparent; }\n";
+		}
+		$css .= "#comments.comments-area a, .wp-block-comments a { color: var(--gsc-native-accent); }\n#comments.comments-area a:focus-visible, .wp-block-comments a:focus-visible { outline: 2px solid var(--gsc-native-accent); outline-offset: 2px; }";
+		wp_add_inline_style( $handle, $css );
+	}
+
 	/** Register the existing frontend script for backward compatibility. */
 	public function enqueue_scripts() {
+		if ( $this->is_wordpress_native_provider() ) {
+			return;
+		}
+
 		wp_enqueue_script(
 			'genialsouls-social-comments',
 			plugin_dir_url( __FILE__ ) . 'js/wpfc-public.js',
@@ -144,7 +180,7 @@ class GenialSouls_Social_Comments_Public {
 	private function render_provider( $post_id, $options ) {
 		$provider = $this->get_provider();
 		if ( ! $provider ) {
-			return '<div class="genialsouls-social-comments-provider-error"><p>' . esc_html__( 'The selected comment provider is invalid. Please review the Social Comments settings.', 'gs-facebook-comments' ) . '</p></div>';
+			return '<div class="genialsouls-social-comments-provider-error"><p>' . esc_html__( 'The selected comment provider is invalid. Please review the Genial Comments settings.', 'gs-facebook-comments' ) . '</p></div>';
 		}
 
 		if ( 'disqus' === $provider->get_id() ) {
@@ -170,5 +206,15 @@ class GenialSouls_Social_Comments_Public {
 	private function get_settings() {
 		$options = get_option( 'wpfc_settings', array() );
 		return is_array( $options ) ? $options : array();
+	}
+
+	/**
+	 * Determine whether the native provider is selected.
+	 *
+	 * @return bool Whether plugin-owned provider assets should stay inactive.
+	 */
+	private function is_wordpress_native_provider() {
+		// phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText -- Provider IDs are lowercase persistence keys.
+		return GenialSouls_Social_Comments_Provider_Resolver::PROVIDER_WORDPRESS === GenialSouls_Social_Comments_Provider_Resolver::resolve( $this->get_settings() );
 	}
 }

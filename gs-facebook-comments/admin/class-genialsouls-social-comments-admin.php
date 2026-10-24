@@ -55,11 +55,14 @@ class GenialSouls_Social_Comments_Admin {
 
 	/** Register admin styles on plugin and editor screens. */
 	public function enqueue_styles() {
+		$style_file    = plugin_dir_path( __FILE__ ) . 'css/wpfc-admin.css';
+		$style_version = file_exists( $style_file ) ? (string) filemtime( $style_file ) : $this->version;
+
 		wp_enqueue_style(
 			'genialsouls-social-comments-admin',
 			plugin_dir_url( __FILE__ ) . 'css/wpfc-admin.css',
 			array(),
-			$this->version
+			$style_version
 		);
 	}
 
@@ -85,8 +88,8 @@ class GenialSouls_Social_Comments_Admin {
 	/** Register the settings page. */
 	public function register_admin_menu() {
 		add_menu_page(
-			esc_html__( 'Social Comments', 'gs-facebook-comments' ),
-			esc_html__( 'Social Comments', 'gs-facebook-comments' ),
+			esc_html__( 'Genial Comments', 'gs-facebook-comments' ),
+			esc_html__( 'Genial Comments', 'gs-facebook-comments' ),
 			'manage_options',
 			$this->plugin_name,
 			array( $this, 'display_plugin_setup_page' ),
@@ -103,13 +106,17 @@ class GenialSouls_Social_Comments_Admin {
 	/** Render the Meta discontinuation notice without changing stored settings. */
 	public function render_facebook_notice() {
 		$announcement_url = 'https://developers.facebook.com/blog/post/2025/11/10/platform-evolution-facebook-social-plugins-to-be-discontinued-february-2026/';
+		$options          = $this->get_settings();
+		$selected         = GenialSouls_Social_Comments_Provider_Resolver::resolve( $options );
+		if ( 'facebook' !== $selected ) {
+			return;
+		}
 		?>
-		<div class="gsc-facebook-notice notice notice-warning is-dismissible">
+		<div class="gsc-facebook-notice notice notice-warning" role="alert">
 			<span class="dashicons dashicons-warning" aria-hidden="true"></span>
 			<div>
-				<h2><?php esc_html_e( 'Facebook Comments has been discontinued', 'gs-facebook-comments' ); ?></h2>
-				<p><strong><?php esc_html_e( 'Meta discontinued the Facebook Comments Plugin in February 2026. It no longer displays on websites.', 'gs-facebook-comments' ); ?></strong></p>
-				<p><?php esc_html_e( 'Your existing Facebook settings are retained for compatibility, but Facebook Comments will not show new comments. Select Disqus for active commenting.', 'gs-facebook-comments' ); ?></p>
+				<h2><?php esc_html_e( 'Legacy Facebook provider selected', 'gs-facebook-comments' ); ?></h2>
+				<p><?php esc_html_e( 'Facebook Comments has been discontinued. Existing settings are preserved, but Facebook comments are no longer displayed. Select Disqus for active external commenting.', 'gs-facebook-comments' ); ?></p>
 				<p><a href="<?php echo esc_url( $announcement_url ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Learn more on Meta Developers', 'gs-facebook-comments' ); ?> <span aria-hidden="true">↗</span></a></p>
 			</div>
 		</div>
@@ -130,6 +137,7 @@ class GenialSouls_Social_Comments_Admin {
 
 		add_settings_section( 'genialsouls_provider_section', esc_html__( 'Comments provider', 'gs-facebook-comments' ), array( $this, 'render_provider_intro' ), 'wpfc_options' );
 		add_settings_section( 'genialsouls_disqus_section', esc_html__( 'Disqus', 'gs-facebook-comments' ), array( $this, 'render_disqus_intro' ), 'wpfc_options' );
+		add_settings_section( 'genialsouls_native_appearance_section', '', array( $this, 'render_native_appearance' ), 'wpfc_options' );
 		add_settings_section( 'wpfc_fb_appid_section', esc_html__( 'Facebook Comments settings', 'gs-facebook-comments' ), '__return_false', 'wpfc_options' );
 		add_settings_section( 'wpfc_options_section', esc_html__( 'Comments box', 'gs-facebook-comments' ), '__return_false', 'wpfc_options' );
 		add_settings_section( 'wpfc_posts_options_section', esc_html__( 'Post types', 'gs-facebook-comments' ), array( $this, 'render_post_types_intro' ), 'wpfc_options' );
@@ -184,7 +192,7 @@ class GenialSouls_Social_Comments_Admin {
 				$clean['genialsouls_provider'] = sanitize_key( $provider );
 			} else {
 				$clean['genialsouls_provider'] = $provider;
-				add_settings_error( 'wpfc_settings', 'invalid_provider', __( 'The selected provider is invalid. Choose Disqus or Facebook / Meta.', 'gs-facebook-comments' ), 'error' );
+				add_settings_error( 'wpfc_settings', 'invalid_provider', __( 'The selected provider is invalid. Choose Disqus, WordPress Native Comments, or Facebook / Meta.', 'gs-facebook-comments' ), 'error' );
 			}
 		} elseif ( ! array_key_exists( 'genialsouls_provider', $clean ) ) {
 			$clean['genialsouls_provider'] = GenialSouls_Social_Comments_Provider_Resolver::get_default_provider();
@@ -201,6 +209,24 @@ class GenialSouls_Social_Comments_Admin {
 
 		$button                                  = isset( $input['genialsouls_disqus_button_text'] ) ? sanitize_text_field( wp_unslash( $input['genialsouls_disqus_button_text'] ) ) : ( isset( $clean['genialsouls_disqus_button_text'] ) ? sanitize_text_field( $clean['genialsouls_disqus_button_text'] ) : __( 'Load comments', 'gs-facebook-comments' ) );
 		$clean['genialsouls_disqus_button_text'] = '' !== $button ? $button : __( 'Load comments', 'gs-facebook-comments' );
+
+		$preset_key       = GenialSouls_Social_Comments_Native_Appearance::PRESET_OPTION;
+		$preset_submitted = array_key_exists( $preset_key, $input );
+		$preset_value     = $preset_submitted ? wp_unslash( $input[ $preset_key ] ) : ( isset( $clean[ $preset_key ] ) ? $clean[ $preset_key ] : 'default' );
+		$preset           = GenialSouls_Social_Comments_Native_Appearance::normalize_preset( $preset_value );
+		if ( $preset_submitted && ( ! is_scalar( $preset_value ) || sanitize_key( (string) $preset_value ) !== $preset ) ) {
+			add_settings_error( 'wpfc_settings', 'invalid_native_appearance', __( 'Choose Default, Modern, or Minimal for Native Comments Appearance.', 'gs-facebook-comments' ) );
+		}
+		$clean[ $preset_key ] = $preset;
+
+		$accent_key       = GenialSouls_Social_Comments_Native_Appearance::ACCENT_OPTION;
+		$accent_submitted = array_key_exists( $accent_key, $input );
+		$accent_value     = $accent_submitted ? wp_unslash( $input[ $accent_key ] ) : ( isset( $clean[ $accent_key ] ) ? $clean[ $accent_key ] : 'blue' );
+		$accent           = GenialSouls_Social_Comments_Native_Appearance::normalize_accent( $accent_value );
+		if ( $accent_submitted && ( ! is_scalar( $accent_value ) || sanitize_key( (string) $accent_value ) !== $accent ) ) {
+			add_settings_error( 'wpfc_settings', 'invalid_native_accent', __( 'Choose one of the available Native Comments accent colors.', 'gs-facebook-comments' ) );
+		}
+		$clean[ $accent_key ] = $accent;
 
 		$app_id = isset( $input['wpfc_text_fb_appid'] ) ? sanitize_text_field( wp_unslash( $input['wpfc_text_fb_appid'] ) ) : '';
 		if ( '' !== $app_id && ! preg_match( '/^\d{5,32}$/', $app_id ) ) {
@@ -266,7 +292,7 @@ class GenialSouls_Social_Comments_Admin {
 	/** Explain provider selection and preserve Facebook as the legacy default. */
 	public function render_provider_intro() {
 		?>
-		<p><?php esc_html_e( 'Choose the provider used for new frontend comment displays. Existing installations without a provider selection continue using Facebook / Meta, and selecting Disqus does not delete native WordPress comments.', 'gs-facebook-comments' ); ?></p>
+		<p><?php esc_html_e( 'Choose the provider used for new plugin comment displays. Existing installations without a provider selection continue using Facebook / Meta. WordPress Native Comments are displayed by your active theme; selecting a provider never deletes native WordPress comments.', 'gs-facebook-comments' ); ?></p>
 		<?php
 	}
 
@@ -274,7 +300,7 @@ class GenialSouls_Social_Comments_Admin {
 	public function render_provider_warning() {
 		$options = $this->get_settings();
 		if ( GenialSouls_Social_Comments_Provider_Resolver::has_invalid_provider( $options ) ) {
-			printf( '<div class="notice notice-error"><p>%s</p></div>', esc_html__( 'The saved comment provider is invalid. Select Disqus or Facebook / Meta and save the settings. The invalid value will not be silently replaced.', 'gs-facebook-comments' ) );
+			printf( '<div class="notice notice-error"><p>%s</p></div>', esc_html__( 'The saved comment provider is invalid. Select Disqus, WordPress Native Comments, or Facebook / Meta and save the settings. The invalid value will not be silently replaced.', 'gs-facebook-comments' ) );
 			return;
 		}
 
@@ -291,19 +317,26 @@ class GenialSouls_Social_Comments_Admin {
 			$value = sanitize_key( (string) $options['genialsouls_provider'] );
 		}
 		$providers = array(
-			'facebook' => array(
-				'label'       => __( 'Facebook Comments', 'gs-facebook-comments' ),
-				'badge'       => __( 'Discontinued', 'gs-facebook-comments' ),
-				'description' => __( 'Meta discontinued the Facebook Comments Plugin in February 2026. Existing settings remain available for compatibility, but this provider no longer displays comments.', 'gs-facebook-comments' ),
-				'url'         => 'https://developers.facebook.com/blog/post/2025/11/10/platform-evolution-facebook-social-plugins-to-be-discontinued-february-2026/',
-				'link'        => __( 'Learn more on Meta Developers', 'gs-facebook-comments' ),
-			),
-			'disqus'   => array(
+			'disqus'    => array(
 				'label'       => __( 'Disqus Comments', 'gs-facebook-comments' ),
 				'badge'       => __( 'Recommended', 'gs-facebook-comments' ),
-				'description' => __( 'Use the active Disqus commenting service with privacy-aware click, viewport, or immediate loading.', 'gs-facebook-comments' ),
+				'description' => __( 'Add Disqus-powered discussions with click-to-load, viewport, or immediate loading.', 'gs-facebook-comments' ),
 				'url'         => 'https://disqus.com/',
 				'link'        => __( 'Visit Disqus', 'gs-facebook-comments' ),
+			),
+			'wordpress' => array(
+				'label'       => __( 'WordPress Native Comments', 'gs-facebook-comments' ),
+				'badge'       => __( 'Built in', 'gs-facebook-comments' ),
+				'description' => __( 'Use your theme\'s existing WordPress comments. No external account required.', 'gs-facebook-comments' ),
+				'url'         => admin_url( 'options-discussion.php' ),
+				'link'        => __( 'Discussion Settings', 'gs-facebook-comments' ),
+			),
+			'facebook'  => array(
+				'label'       => __( 'Facebook Comments', 'gs-facebook-comments' ),
+				'badge'       => __( 'Discontinued', 'gs-facebook-comments' ),
+				'description' => __( 'Legacy compatibility only. Meta discontinued Facebook Comments in February 2026.', 'gs-facebook-comments' ),
+				'url'         => 'https://developers.facebook.com/blog/post/2025/11/10/platform-evolution-facebook-social-plugins-to-be-discontinued-february-2026/',
+				'link'        => __( 'Learn more on Meta Developers', 'gs-facebook-comments' ),
 			),
 		);
 		?>
@@ -314,14 +347,19 @@ class GenialSouls_Social_Comments_Admin {
 						<input type="radio" name="wpfc_settings[genialsouls_provider]" value="<?php echo esc_attr( $provider_id ); ?>" <?php checked( $value, $provider_id ); ?>>
 						<span class="gsc-provider-card-body">
 						<span class="gsc-provider-card-heading">
-							<span class="gsc-provider-icon dashicons <?php echo 'facebook' === $provider_id ? 'dashicons-facebook' : 'dashicons-format-chat'; ?>" aria-hidden="true"></span>
+							<span class="gsc-provider-icon dashicons <?php echo 'facebook' === $provider_id ? 'dashicons-facebook' : ( GenialSouls_Social_Comments_Provider_Resolver::PROVIDER_WORDPRESS === $provider_id ? 'dashicons-wordpress' : 'dashicons-format-chat' ); ?>" aria-hidden="true"></span>
 							<span class="gsc-provider-card-title"><?php echo esc_html( $provider['label'] ); ?></span>
-							<span class="gsc-provider-badge <?php echo 'facebook' === $provider_id ? 'is-discontinued' : 'is-recommended'; ?>"><?php echo esc_html( $provider['badge'] ); ?></span>
+							<span class="gsc-provider-badge <?php echo 'facebook' === $provider_id ? 'is-discontinued' : ( 'disqus' === $provider_id ? 'is-recommended' : 'is-native' ); ?>"><?php echo esc_html( $provider['badge'] ); ?></span>
 						</span>
 						<span class="gsc-provider-card-description"><?php echo esc_html( $provider['description'] ); ?></span>
 						</span>
 					</label>
-					<a class="gsc-provider-card-link" href="<?php echo esc_url( $provider['url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $provider['link'] ); ?> <span aria-hidden="true">↗</span></a>
+					<?php if ( ! empty( $provider['url'] ) && ! empty( $provider['link'] ) ) : ?>
+						<a class="gsc-provider-card-link" href="<?php echo esc_url( $provider['url'] ); ?>" target="<?php echo GenialSouls_Social_Comments_Provider_Resolver::PROVIDER_WORDPRESS === $provider_id ? '_self' : '_blank'; ?>" rel="noopener noreferrer"><?php echo esc_html( $provider['link'] ); ?> <span aria-hidden="true"><?php echo GenialSouls_Social_Comments_Provider_Resolver::PROVIDER_WORDPRESS === $provider_id ? '→' : '↗'; ?></span></a>
+					<?php endif; ?>
+					<?php if ( GenialSouls_Social_Comments_Provider_Resolver::PROVIDER_WORDPRESS === $provider_id ) : ?>
+						<a class="gsc-provider-card-link" href="<?php echo esc_url( admin_url( 'edit-comments.php' ) ); ?>"><?php esc_html_e( 'Manage Comments', 'gs-facebook-comments' ); ?> <span aria-hidden="true">→</span></a>
+					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -335,6 +373,68 @@ class GenialSouls_Social_Comments_Admin {
 		<p><?php esc_html_e( 'Disqus is an external commenting service. When comments are loaded, information about this page and the visitor may be transmitted to Disqus. Disqus Basic may display advertising; advertising, tracking, account features, and ad-free options are controlled by Disqus and your Disqus account or plan.', 'gs-facebook-comments' ); ?></p>
 		<p><a href="https://disqus.com/terms/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Disqus Terms', 'gs-facebook-comments' ); ?></a> · <a href="https://disqus.com/privacy-policy/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Disqus Privacy Policy', 'gs-facebook-comments' ); ?></a></p>
 		<?php
+	}
+
+	/** Render the contextual Native Comments appearance panel. */
+	public function render_native_appearance() {
+		$options      = $this->get_settings();
+		$preset_value = GenialSouls_Social_Comments_Native_Appearance::normalize_preset( isset( $options[ GenialSouls_Social_Comments_Native_Appearance::PRESET_OPTION ] ) ? $options[ GenialSouls_Social_Comments_Native_Appearance::PRESET_OPTION ] : 'default' );
+		$accent_value = GenialSouls_Social_Comments_Native_Appearance::normalize_accent( isset( $options[ GenialSouls_Social_Comments_Native_Appearance::ACCENT_OPTION ] ) ? $options[ GenialSouls_Social_Comments_Native_Appearance::ACCENT_OPTION ] : 'blue' );
+		?>
+		<section class="gsc-native-appearance" data-provider-context="wordpress" aria-labelledby="gsc-native-appearance-title">
+			<h2 id="gsc-native-appearance-title"><?php esc_html_e( 'Native Comments Appearance', 'gs-facebook-comments' ); ?></h2>
+			<p class="gsc-native-appearance-intro"><?php esc_html_e( 'Customize the appearance of your theme\'s existing WordPress comments. Styling is optional and may vary by theme.', 'gs-facebook-comments' ); ?></p>
+			<fieldset>
+				<legend><?php esc_html_e( 'Appearance preset', 'gs-facebook-comments' ); ?></legend>
+				<?php
+				$this->render_radio_group(
+					GenialSouls_Social_Comments_Native_Appearance::PRESET_OPTION,
+					$preset_value,
+					array(
+						'default' => __( 'Default — use existing theme styling', 'gs-facebook-comments' ),
+						'modern'  => __( 'Modern — subtle cards, rounded corners, comfortable spacing', 'gs-facebook-comments' ),
+						'minimal' => __( 'Minimal — simple dividers, clean spacing and typography', 'gs-facebook-comments' ),
+					)
+				);
+				?>
+			</fieldset>
+			<fieldset>
+				<legend><?php esc_html_e( 'Accent color', 'gs-facebook-comments' ); ?></legend>
+				<?php
+				$this->render_accent_radio_group(
+					$accent_value,
+					array(
+						'blue'    => __( 'Blue', 'gs-facebook-comments' ),
+						'green'   => __( 'Green', 'gs-facebook-comments' ),
+						'purple'  => __( 'Purple', 'gs-facebook-comments' ),
+						'neutral' => __( 'Neutral', 'gs-facebook-comments' ),
+					)
+				);
+				?>
+			</fieldset>
+		</section>
+		<?php
+	}
+
+	/**
+	 * Render the native accent radios with decorative palette swatches.
+	 *
+	 * @param string               $selected Selected accent.
+	 * @param array<string,string> $choices  Available accent labels.
+	 */
+	private function render_accent_radio_group( $selected, $choices ) {
+		$key = GenialSouls_Social_Comments_Native_Appearance::ACCENT_OPTION;
+
+		foreach ( $choices as $value => $label ) {
+			$color = GenialSouls_Social_Comments_Native_Appearance::get_accent_color( $value );
+			?>
+			<label class="gsc-accent-color-option">
+				<input type="radio" name="wpfc_settings[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $value ); ?>" <?php checked( $selected, $value ); ?>>
+				<span class="gsc-accent-color-swatch" style="background-color: <?php echo esc_attr( $color ); ?>;" aria-hidden="true"></span>
+				<span class="screen-reader-text"><?php echo esc_html( $label ); ?></span>
+			</label>
+			<?php
+		}
 	}
 
 	/** Render the validated Disqus shortname. */
@@ -517,7 +617,7 @@ class GenialSouls_Social_Comments_Admin {
 		if ( isset( $options['wpfc_checkbox_post_types'][ $post_type ] ) ) {
 			add_meta_box(
 				'genialsouls-social-comments',
-				esc_html__( 'Social Comments', 'gs-facebook-comments' ),
+				esc_html__( 'Genial Comments', 'gs-facebook-comments' ),
 				array( $this, 'render_meta_box' ),
 				$post_type,
 				'side'

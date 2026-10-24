@@ -3,7 +3,7 @@
  * included in this file.
  */
 .wpfc_wrap{
-	width:100%;
+	width:auto;
 }
 div#wpfc-services-block {
 	display: block;
@@ -279,9 +279,10 @@ input.fb-options {
     padding: 11px;
 }
 
-/* Genial Social Comments settings page. Keep all selectors scoped to this screen. */
+/* Genial Comments settings page. Keep all selectors scoped to this screen. */
 .genialsouls-social-comments-admin {
 	max-width: 1440px;
+	color: var(--wp-admin-theme-color-text, #1d2327);
 }
 
 .genialsouls-social-comments-admin .gsc-page-header {
@@ -336,7 +337,7 @@ input.fb-options {
 	align-items: flex-start;
 	gap: 14px;
 	margin: 0 0 20px;
-	padding: 18px 42px 18px 18px;
+	padding: 14px 18px;
 	border-left-width: 4px;
 	border-top: 1px solid #dba617;
 	border-right: 1px solid #dba617;
@@ -352,7 +353,7 @@ input.fb-options {
 
 .gsc-facebook-notice h2 {
 	margin: 0 0 7px;
-	font-size: 17px;
+	font-size: 15px;
 	line-height: 1.3;
 }
 
@@ -368,13 +369,14 @@ input.fb-options {
 
 .gsc-admin-grid {
 	display: grid;
-	grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
-	gap: 22px;
+	grid-template-columns: minmax(0, 1.8fr) minmax(250px, 0.9fr);
+	gap: 18px;
 	align-items: start;
 }
 
 .gsc-main-column {
 	min-width: 0;
+	container: gsc-settings / inline-size;
 }
 
 .gsc-main-column > form > h2,
@@ -384,7 +386,7 @@ input.fb-options {
 
 .gsc-main-column > form > h2 {
 	margin: 20px 0 0;
-	padding: 18px 20px 8px;
+	padding: 16px 18px 8px;
 	border: 1px solid #dcdcde;
 	border-bottom: 0;
 	border-radius: 6px 6px 0 0;
@@ -397,10 +399,151 @@ input.fb-options {
 
 .gsc-main-column > form > h2 + .form-table {
 	margin: 0;
-	padding: 0 20px 18px;
+	padding: 0 18px 16px;
 	border: 1px solid #dcdcde;
 	border-top: 0;
 	border-radius: 0 0 6px 6px;
+}
+
+.gsc-main-column > form > h2 + p,
+.gsc-main-column > form > h2 + p + p {
+	margin: 0;
+	padding: 10px 18px 0;
+	border-right: 1px solid #dcdcde;
+	border-left: 1px solid #dcdcde;
+	background: #fff;
+}
+
+.gsc-main-column > form > h2 + p + p {
+	padding-top: 5px;
+	padding-bottom: 12px;
+}
+
+.gsc-main-column > form > h2 + p + .form-table,
+.gsc-main-column > form > h2 + p + p + .form-table {
+	border-top: 0;
+}
+
+.gsc-native-appearance {
+	margin-top: 20px;
+	padding: 16px 18px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.gsc-native-appearance[hidden] {
+	display: none !important;
+}
+
+.gsc-native-appearance h2 {
+	margin: 0;
+	font-size: 16px;
+}
+
+.gsc-native-appearance-intro {
+	margin: 8px 0 12px;
+	color: #646970;
+}
+
+.gsc-native-appearance fieldset {
+	margin: 14px 0 0;
+	padding: 12px;
+	border: 1px solid #f0f0f1;
+	border-radius: 4px;
+}
+
+.gsc-native-appearance legend {
+	padding: 0 5px;
+	font-weight: 600;
+}
+
+.gsc-native-appearance label {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 0 12px 3px 0;
+}
+
+.gsc-native-appearance .gsc-accent-color-option {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	gap: 0;
+	margin: 0 8px 0 0;
+	padding: 4px;
+	cursor: pointer;
+}
+
+.gsc-native-appearance .gsc-accent-color-option input[type="radio"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+.gsc-accent-color-swatch {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	flex: 0 0 32px;
+	border: 3px solid rgba(0, 0, 0, 0.16);
+	border-radius: 5px;
+}
+
+.gsc-accent-color-swatch::after {
+	content: "✓";
+	color: #fff;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 1;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+	opacity: 0;
+}
+
+.gsc-accent-color-option input[type="radio"]:checked + .gsc-accent-color-swatch {
+	border-color: #1d2327;
+}
+
+.gsc-accent-color-option input[type="radio"]:checked + .gsc-accent-color-swatch::after {
+	opacity: 1;
+}
+
+.gsc-accent-color-option input[type="radio"]:focus-visible + .gsc-accent-color-swatch {
+	outline: 3px solid #2271b1;
+	outline-offset: 3px;
+}
+
+.gsc-main-column > form > h2:first-of-type + p + .form-table tr {
+	display: block;
+}
+
+.gsc-main-column > form > h2:first-of-type + p + .form-table th,
+.gsc-main-column > form > h2:first-of-type + p + .form-table td {
+	display: block;
+	width: auto;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.gsc-main-column > form > h2:first-of-type + p + .form-table th {
+	padding-bottom: 8px;
+}
+
+.gsc-main-column > form > h2:first-of-type + p + .form-table td {
+	padding-top: 0;
 }
 
 .gsc-main-column .form-table th {
@@ -434,7 +577,7 @@ input.fb-options {
 }
 
 .gsc-sidebar-card {
-	padding: 18px;
+	padding: 16px;
 	border: 1px solid #dcdcde;
 	border-radius: 6px;
 	background: #fff;
@@ -442,12 +585,17 @@ input.fb-options {
 
 .gsc-sidebar-card h2 {
 	margin: 0 0 10px;
-	font-size: 16px;
+	font-size: 15px;
+	line-height: 1.4;
 }
 
 .gsc-sidebar-card p {
 	margin: 8px 0;
 	line-height: 1.5;
+}
+
+.gsc-sidebar-card a:not(.button) {
+	text-underline-offset: 2px;
 }
 
 .gsc-sidebar-card .button {
@@ -484,41 +632,56 @@ input.fb-options {
 
 .gsc-provider-cards {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 12px;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+	align-items: stretch;
+	gap: 14px;
+}
+
+@container gsc-settings (max-width: 800px) {
+	.gsc-provider-cards {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@container gsc-settings (max-width: 500px) {
+	.gsc-provider-cards {
+		grid-template-columns: minmax(0, 1fr);
+	}
 }
 
 .gsc-provider-card {
 	position: relative;
-	display: block;
+	display: flex;
+	flex-direction: column;
 	min-width: 0;
-	padding: 18px;
-	border: 1px solid #dcdcde;
+	padding: 16px;
+	border: 1px solid var(--wp-admin-border-color, #dcdcde);
 	border-radius: 6px;
 	background: #fff;
 	cursor: pointer;
-	transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .gsc-provider-card:hover,
 .gsc-provider-card:focus-within {
-	border-color: #8c8f94;
+	border-color: var(--wp-admin-theme-color, #2271b1);
 }
 
 .gsc-provider-card.is-selected {
-	border-color: #2271b1;
-	box-shadow: 0 0 0 1px #2271b1;
+	border-color: var(--wp-admin-theme-color, #2271b1);
+	box-shadow: inset 0 0 0 1px var(--wp-admin-theme-color, #2271b1);
 	background: #f6fbff;
 }
 
 .gsc-provider-card-label {
 	display: block;
+	flex: 1 1 auto;
 	cursor: pointer;
 }
 
 .gsc-provider-card-label > input {
 	position: absolute;
-	margin: 4px 0 0;
+	margin: 3px 0 0;
 }
 
 .gsc-provider-card-body {
@@ -528,18 +691,22 @@ input.fb-options {
 
 .gsc-provider-card-heading {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: 7px;
+	min-height: 34px;
 }
 
 .gsc-provider-icon {
-	color: #2271b1;
+	flex: 0 0 auto;
+	color: var(--wp-admin-theme-color, #2271b1);
 	font-size: 24px;
 }
 
 .gsc-provider-card-title {
-	font-size: 15px;
+	flex: 1 1 7rem;
+	font-size: 14px;
+	line-height: 1.45;
 	font-weight: 600;
 }
 
@@ -560,16 +727,31 @@ input.fb-options {
 	color: #18794e;
 }
 
+.gsc-provider-badge.is-native {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
 .gsc-provider-card-description {
 	display: block;
-	margin: 12px 0 10px;
+	margin: 12px 0 14px;
 	color: #50575e;
 	line-height: 1.5;
 }
 
 .gsc-provider-card-link {
-	display: inline-block;
-	margin-left: 30px;
+	display: block;
+	width: fit-content;
+	max-width: 100%;
+	margin: 8px 0 0 30px;
+	line-height: 1.45;
+	text-underline-offset: 2px;
+}
+
+.gsc-provider-card-link:focus-visible,
+.gsc-sidebar-card a:focus-visible {
+	outline: 2px solid var(--wp-admin-theme-color, #2271b1);
+	outline-offset: 2px;
 }
 
 .gsc-provider-preservation {
@@ -607,11 +789,16 @@ input.fb-options {
 	}
 
 	.gsc-sidebar {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 	}
 }
 
 @media screen and (max-width: 782px) {
+	.genialsouls-social-comments-admin .gsc-main-column input.regular-text {
+		box-sizing: border-box;
+		max-width: calc(100vw - 40px);
+	}
+
 	.genialsouls-social-comments-admin .gsc-page-brand {
 		width: 100%;
 	}
@@ -621,8 +808,7 @@ input.fb-options {
 		flex-direction: column;
 	}
 
-	.gsc-sidebar,
-	.gsc-provider-cards {
+	.gsc-sidebar {
 		grid-template-columns: 1fr;
 	}
 
@@ -635,6 +821,12 @@ input.fb-options {
 
 	.gsc-main-column .form-table tr + tr th {
 		border-top: 1px solid #f0f0f1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.genialsouls-social-comments-admin .gsc-provider-card {
+		transition: none;
 	}
 }
 

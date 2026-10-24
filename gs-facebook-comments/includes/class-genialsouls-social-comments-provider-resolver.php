@@ -21,8 +21,11 @@ class GenialSouls_Social_Comments_Provider_Resolver {
 	/** Legacy installation state. */
 	const STATE_LEGACY = 'legacy';
 
+	/** WordPress Native Comments provider ID. */
+	const PROVIDER_WORDPRESS = 'wordpress';
+
 	/** Supported provider IDs. */
-	const PROVIDERS = array( 'facebook', 'disqus' );
+	const PROVIDERS = array( 'facebook', 'disqus', self::PROVIDER_WORDPRESS );
 
 	/** Return the persisted installation state, conservatively defaulting to legacy. */
 	public static function get_installation_state() {

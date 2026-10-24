@@ -12,10 +12,10 @@
  * @package           GenialSouls_Social_Comments
  *
  * @wordpress-plugin
- * Plugin Name:       Genial Social Comments
+ * Plugin Name:       Genial Comments
  * Plugin URI:        https://profiles.wordpress.org/qsheeraz#content-plugins
- * Description:       This plugin adds an external comments provider to selected content on your site.
- * Version:           1.8.2
+ * Description:       Adds Disqus discussions or uses your theme's WordPress comments with optional appearance presets.
+ * Version:           1.8.3
  * Requires at least: 4.7
  * Requires PHP:      7.4
  * Author:            GenialSouls
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GENIALSOULS_SOCIAL_COMMENTS_VERSION', '1.8.2' );
+define( 'GENIALSOULS_SOCIAL_COMMENTS_VERSION', '1.8.3' );
 
 /**
  * The code that runs during plugin activation.
